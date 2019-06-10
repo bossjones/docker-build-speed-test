@@ -38,16 +38,17 @@ before_script:
   - docker pull $CACHE_IMAGE:stage || true
 
 script:
-  - docker build
-      --target base
-      --cache-from $CACHE_IMAGE:base
-      --tag $CACHE_IMAGE:base
-      --file ./Dockerfile
-      "."
-  - docker-compose -f docker-compose.yml build
-  - docker-compose -f docker-compose.yml up -d
-  - docker-compose -f docker-compose.yml exec web flake8
-  - docker-compose -f docker-compose.yml exec web python manage.py test
+  - make dc-ci
+  # - docker build
+  #     --target base
+  #     --cache-from $CACHE_IMAGE:base
+  #     --tag $CACHE_IMAGE:base
+  #     --file ./Dockerfile
+  #     "."
+  # - docker-compose -f docker-compose.yml build
+  # - docker-compose -f docker-compose.yml up -d
+  # - docker-compose -f docker-compose.yml exec web flake8
+  # - docker-compose -f docker-compose.yml exec web python manage.py test
 
 # after_success:
 #   - docker login -u $REGISTRY_USER -p $REGISTRY_PASS

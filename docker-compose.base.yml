@@ -5,10 +5,10 @@ services:
   web:
     build:
       context: .
-      target: stage
+      target: base
       cache_from:
         - bossjones/docker-build-speed-test:base
-    image: bossjones/docker-build-speed-test:stage
+    image: bossjones/docker-build-speed-test:base
     ports:
       - 5001:5000
     environment:
@@ -16,15 +16,4 @@ services:
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=postgres://postgres:postgres@db:5432/users
       - DATABASE_TEST_URL=postgres://postgres:postgres@db:5432/users_test
-    depends_on:
-      - db
 
-  db:
-    build:
-      context: ./project/db
-      dockerfile: Dockerfile
-    expose:
-      - 5432
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres

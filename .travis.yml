@@ -7,14 +7,27 @@ services:
 
 env:
   global:
-    DOCKER_COMPOSE_VERSION: 1.23.2
     CACHE_IMAGE: bossjones/docker-build-speed-test
+    DOCKER_COMPOSE_VERSION: 1.24.0
+    DOCKER_VERSION: 18.09
 
 before_install:
-  - sudo rm /usr/local/bin/docker-compose
+  - sudo apt-get update
+  - travis_retry pip install coveralls
+
+  - sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") $(lsb_release -cs) stable"
+  - sudo apt-get update
+  - sudo apt-cache search docker
+  - apt-cache madison docker-ce
+  - sudo apt-get --allow-downgrades -y -o Dpkg::Options::="--force-confnew" install docker-ce=$(apt-cache madison docker-ce | grep $DOCKER_VERSION | head -1 | awk '{print $3}')
+
+  - sudo rm -f /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
+  - docker-compose --version
 
 before_script:
   - docker pull $CACHE_IMAGE:base || true

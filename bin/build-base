@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+export CACHE_IMAGE: bossjones/docker-build-speed-test
+
+
+docker build
+      --target base
+      --cache-from $CACHE_IMAGE:base
+      --tag $CACHE_IMAGE:base
+      --file ./Dockerfile
+      "."

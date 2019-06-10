@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+docker-compose -f docker-compose.multi.yml build
+docker-compose -f docker-compose.multi.yml up -d
+docker-compose -f docker-compose.multi.yml exec web flake8
+docker-compose -f docker-compose.multi.yml exec web python manage.py test

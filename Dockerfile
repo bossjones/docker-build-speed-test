@@ -13,7 +13,7 @@ RUN pip install -r requirements.txt
 # COPY project/ .
 # RUN pip install .
 
-FROM python:3.7-slim AS build-image
+FROM python:3.7-slim AS stage
 RUN apt-get update && \
     apt-get -y install netcat && \
     apt-get clean

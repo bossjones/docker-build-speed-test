@@ -10,5 +10,5 @@ docker build \
       "."
 
 
-docker push $CACHE_IMAGE:base
+docker push $CACHE_IMAGE:base || true
 docker push $CACHE_IMAGE:stage || true

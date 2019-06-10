@@ -2,7 +2,7 @@
 export CACHE_IMAGE=bossjones/docker-build-speed-test
 
 
-docker build \
+time docker build \
       --target base \
       --cache-from $CACHE_IMAGE:base \
       --tag $CACHE_IMAGE:base \
@@ -10,5 +10,5 @@ docker build \
       "."
 
 
-docker push $CACHE_IMAGE:base || true
+time docker push $CACHE_IMAGE:base || true
 # docker push $CACHE_IMAGE:stage || true

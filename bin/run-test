@@ -3,7 +3,9 @@
 echo " [run] Remove possibly previous broken stacks left hanging after an error"
 docker-compose -f docker-compose.yml down -v --remove-orphans
 
-docker-compose -f docker-compose.yml build
+time docker-compose -f docker-compose.yml build
 docker-compose -f docker-compose.yml up -d
 docker-compose -f docker-compose.yml exec web flake8
 docker-compose -f docker-compose.yml exec web python manage.py test
+
+time docker push bossjones/docker-build-speed-test:stage || true

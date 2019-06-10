@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 export CACHE_IMAGE=bossjones/docker-build-speed-test
 
-docker pull $CACHE_IMAGE:base || true
-docker-compose -f docker-compose.base.yml build
-docker push $CACHE_IMAGE:base || true
+time docker pull $CACHE_IMAGE:base || true
+time docker pull $CACHE_IMAGE:stage || true
+time docker-compose -f docker-compose.base.yml build
+time docker push $CACHE_IMAGE:base || true
